@@ -1,34 +1,26 @@
 {
-	"intents": [
-		{
-			"intents": "StartFinancialAdvice"
-		}
-
-
-
-
-
-		{
-			"intents": "TimeHorizon"
-			"slots":[
-				{
-					"name": "MyTimeHorizon",
-					"type": "AMAZON.NUMBER"
-				}
-			]
-		}
-
-
-		
-	]
+  "intents": [
+    {
+      "intent": "StartFinancialAdvice"
+    },
+    {
+      "slots": [
+        {
+          "name": "MyTimeHorizon",
+          "type": "AMAZON.NUMBER"
+        }
+      ],
+      "intent": "TimeHorizon"
+    }
+  ]
 }
 
 
 
-// FinancialAdvice Can you give me some financial advice
-
-// TimeHorizon My time horizon is {AMAZON.NUMBER} years
-// TimeHorizon I plan to withdraw after {AMAZON.NUMBER} years
-
+// StartFinancialAdvice Can you give me financial advice
+// StartFinancialAdvice Give me some financial advice
+// StartFinancialAdvice What is some financial advice that you could give me
+// TimeHorizon My time horizon is {MyTimeHorizon} years
+// TimeHorizon I plan to withdraw after {MyTimeHorizon} years
 
 

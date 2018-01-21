@@ -1,4 +1,4 @@
-//* eslint-disable  func-names */
+/* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
 /**
  * This sample demonstrates a simple skill built with the Amazon Alexa Skills
@@ -29,17 +29,18 @@ const states={
 	ADVICE: '_ADVICEMODE'
 };
 
+const handlers={
+	'LaunchRequest': function(){
+		this.emit(":tell", 	START_MESSAGE);
+	},
+	'IntentRequest': function(){
+		this.emit(":resposneReady");
+	},
+	'SessionEndedRequest': function(){
+		this.emit(":resposneReady");
+	}
+}
 
-const startHandlers=Alexa.CreateStateHandler(states.START, {
-
-	//This should prompt Alexa to start giving financial advice
-	'StartFinancialAdvice': function(){
-		this.response.speak(START_MESSAGE);
-		//Not quite sure why this, but it's here in case it's needed
-		this.emit(":responseReady"); 
-	    }
-    }
-);
 
 const adviceHandlers=Alexa.CreateStateHandler(states.ADVICE,{
 
@@ -63,7 +64,15 @@ const adviceHandlers=Alexa.CreateStateHandler(states.ADVICE,{
 		this.response.speak(SCORE + investmentRiskScore);
 	}
 
-    }   
+    },   
+    
+     {
+        'Unhandled': function(){
+            const message = 'Say yes to continue, or no to end the game.';
+            this.response.speak(message);
+            this.emit(':responseReady');
+        }
+    }
 );
 
 
@@ -73,11 +82,10 @@ function addScore(score){
 
 
 
-
 exports.handler = function (event, context) {
     const alexa = Alexa.handler(event, context);
-    alexa.APP_ID = APP_ID;
+    alexa.appId = APP_ID;
     
-    alexa.registerHandlers(startHandlers, adviceHandlers);
-    alexa.execute();
+    alexa.registerHandlers(handlers, adviceHandlers);
+    alexa.execute();   
 };
